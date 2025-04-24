@@ -1,58 +1,56 @@
-// App-level build.gradle file (for Jarvis AI Life Coach app)
-
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'  // If you're using Kotlin
+    id("com.android.application")
+    id("kotlin-android")
+    id("com.google.gms.google-services") // If using Firebase or Google Services
 }
 
 android {
-    compileSdkVersion 30
+    compileSdk = 30 // Make sure this is the latest version you want to target
 
     defaultConfig {
-        applicationId "com.yourapp.jarvis"  // Replace with your actual package name
-        minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
-    }
+        applicationId = "com.yourpackage.javisai" // Replace with your package name
+        minSdk = 21 // Adjust as per your app's requirements
+        targetSdk = 30 // Target SDK version
 
-    signingConfigs {
-        release {
-            // Update these with the actual path and passwords if you're signing your APK for release
-            storeFile file("path/to/your/keystore.jks")  // Replace with the actual path to your keystore file
-            storePassword "your-store-password"  // Replace with your keystore password
-            keyAlias "your-key-alias"  // Replace with your key alias
-            keyPassword "your-key-password"  // Replace with your key password
-        }
+        versionCode = 1
+        versionName = "1.0.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            signingConfig signingConfigs.release
-            minifyEnabled false  // If you want to enable ProGuard, set this to true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            isMinifyEnabled = false // Enable if you want to obfuscate your code
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 
-    // Optional: If you're working with Kotlin, make sure it's enabled here
-    kotlinOptions {
-        jvmTarget = "1.8"
+    // Optional: To support different build flavors if needed
+    flavorDimensions("version")
+    productFlavors {
+        create("free") {
+            applicationIdSuffix = ".free"
+            versionNameSuffix = "-free"
+        }
+        create("paid") {
+            applicationIdSuffix = ".paid"
+            versionNameSuffix = "-paid"
+        }
     }
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.3.0'  // Update as needed
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'  // Update as needed
-    implementation 'com.google.android.material:material:1.4.0'  // Update as needed
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.0") // Make sure this is the right version for Kotlin
+    implementation("androidx.core:core-ktx:1.5.0")
+    implementation("androidx.appcompat:appcompat:1.3.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.0")
+    implementation("com.google.android.material:material:1.3.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
 
-    // If using Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // Add other dependencies for your app
+    implementation("com.google.firebase:firebase-analytics:19.0.0") // Example, if you're using Firebase
 
-    // Other dependencies as needed for your app
-    // E.g., for Google Fit API
-    implementation 'com.google.android.gms:play-services-fitness:20.0.0'  // Update if needed
-
-    // If you're using Firebase or other services, add their dependencies here
-    // Example:
-    // implementation 'com.google.firebase:firebase-analytics:19.0.0'  // Example Firebase dependency
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 }
