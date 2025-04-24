@@ -38,7 +38,7 @@ jobs:
     - name: Build Release APK
       run: ./gradlew assembleRelease --stacktrace  # Change to assembleDebug for debug APKs
 
-    # Step 6: List files to confirm APK generation
+    # Step 6: List APK files to confirm generation
     - name: List APK files in the output directory
       run: |
         echo "Listing APK files..."
@@ -46,16 +46,8 @@ jobs:
 
     # Step 7: Upload the release APK as an artifact
     - name: Upload Release APK artifact
-      if: success() && contains(steps.list_apk.outputs.files, 'app-release.apk')
-      uses: actions/upload-artifact@v3.1.2
+      if: success() && fileExists('app/build/outputs/apk/release/app-release.apk')
+      uses: actions/upload-artifact@v3
       with:
         name: release-apk
         path: app/build/outputs/apk/release/app-release.apk  # Correct path to the release APK
-
-    # Step 8: Optional - Upload Debug APK artifact
-    - name: Upload Debug APK artifact (optional)
-      if: success() && contains(steps.list_apk.outputs.files, 'app-debug.apk')
-      uses: actions/upload-artifact@v3.1.2
-      with:
-        name: debug-apk
-        path: app/build/outputs/apk/debug/app-debug.apk  # Correct path to the debug APK
