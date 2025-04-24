@@ -1,22 +1,28 @@
 // Root-level build.gradle file
 
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
+plugins {
+    id("com.android.library")
+    id("kotlin-android")
+}
+
+android {
+    compileSdk = 30
+
+    defaultConfig {
+        minSdk = 21
+        targetSdk = 30
     }
 
-    dependencies {
-        // Classpath for the Android Gradle plugin
-        classpath("com.android.tools.build:gradle:7.0.2")  // Make sure this is the latest version compatible with your Android Studio
-        // Firebase or Google Services if needed
-        classpath("com.google.gms:google-services:4.3.10")  // Update to the latest version if necessary
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+        }
     }
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
+dependencies {
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.0")
+    implementation("androidx.core:core-ktx:1.5.0")
+    implementation("androidx.appcompat:appcompat:1.3.0")
+    // Add other necessary dependencies here
 }
