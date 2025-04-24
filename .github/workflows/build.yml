@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -22,9 +22,9 @@ jobs:
         java-version: '11'  # Set your required Java version
 
     - name: Set up Android SDK
-      uses: reactivecircus/android-sdk-update-action@v3
+      uses: android-actions/setup-android@v2  # Replacing the broken reactivecircus action with android-actions/setup-android
       with:
-        sdk-version: '30.0.3'  # Update with the Android SDK version you're using
+        sdk-version: '30.0.3'  # Set to the Android SDK version you need
 
     - name: Build APK
       run: ./gradlew assembleRelease  # Change to 'assembleDebug' if you want a debug APK
