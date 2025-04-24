@@ -5,11 +5,12 @@ buildscript {
         google()
         mavenCentral()
     }
+
     dependencies {
         // Classpath for the Android Gradle plugin
-        classpath 'com.android.tools.build:gradle:7.0.2'  // Update to the latest version if necessary
+        classpath("com.android.tools.build:gradle:7.0.2")  // Make sure this is the latest version compatible with your Android Studio
         // Firebase or Google Services if needed
-        classpath 'com.google.gms:google-services:4.3.10'  // Update to the latest version if necessary
+        classpath("com.google.gms:google-services:4.3.10")  // Update to the latest version if necessary
     }
 }
 
@@ -19,4 +20,3 @@ allprojects {
         mavenCentral()
     }
 }
-
