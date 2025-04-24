@@ -3,29 +3,40 @@ name: Build APK
 on:
   push:
     branches:
-      - main
+      - main  # Trigger build when there's a push to the main branch
+  pull_request:
+    branches:
+      - main  # Trigger build on pull requests to main branch
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up JDK
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'  # Set your required Java version
 
-      # Comment out or remove the caching section
-      # - name: Cache Gradle dependencies
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: ~/.gradle/caches
-      #     key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-gradle-
+    - name: Set up Android SDK
+      uses: reactivecircus/android-sdk-update-action@v3
+      with:
+        sdk-version: '30.0.3'  # Update with the Android SDK version you're using
 
-      - name: Build APK
-        run: ./gradlew assembleRelease
+    - name: Build APK
+      run: ./gradlew assembleRelease  # Change to 'assembleDebug' if you want a debug APK
+
+    - name: Upload APK artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: app-apk
+        path: app/build/outputs/apk/release/app-release.apk  # Path to your APK
+
+    - name: Upload debug APK artifact (optional)
+      uses: actions/upload-artifact@v3
+      with:
+        name: app-debug-apk
+        path: app/build/outputs/apk/debug/app-debug.apk  # Path to debug APK (if needed)
