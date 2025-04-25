@@ -24,8 +24,10 @@ jobs:
     - name: Build APK
       run: ./gradlew assembleRelease
 
-    - name: List files to verify APK location
-      run: ls -alh app/build/outputs/apk/release/
+    - name: List APK files (Debug Step)
+      run: |
+        echo "Listing APK files in the release folder..."
+        ls -alh app/build/outputs/apk/release/
 
     - name: Upload APK artifact
       uses: actions/upload-artifact@v3
