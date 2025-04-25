@@ -1,72 +1,95 @@
 package com.jarvis.ai.wear
 
 import android.os.Bundle
-import android.speech.RecognizerIntent
-import android.speech.SpeechRecognizer
-import android.speech.tts.TextToSpeech
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import java.util.*
+import androidx.compose.ui.unit.dp
+import com.jarvis.ai.ui.theme.JarvisAITheme
+import androidx.wear.compose.material.*
+import androidx.compose.material3.Text
+import com.google.android.gms.wearable.DataClient
+import com.google.android.gms.wearable.DataMap
+import com.google.android.gms.wearable.DataMapItem
+import com.google.android.gms.wearable.Wearable
+import kotlinx.coroutines.tasks.await
 
 class JarvisWatchActivity : ComponentActivity() {
-    private lateinit var speechRecognizer: SpeechRecognizer
-    private lateinit var textToSpeech: TextToSpeech
+
+    private lateinit var dataClient: DataClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Initialize SpeechRecognizer and TextToSpeech
-        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this)
-        textToSpeech = TextToSpeech(this) { status ->
-            if (status == TextToSpeech.SUCCESS) {
-                textToSpeech.language = Locale.US
+        setContent {
+            JarvisAITheme {
+                // Setting up the UI for the Jarvis watch face/activity
+                WatchFaceUI()
             }
         }
 
-        setContent {
-            WearUI()
-        }
-    }
-
-    // Start listening to voice commands
-    private fun startListening() {
-        val intent = RecognizerIntent().apply {
-            action = RecognizerIntent.ACTION_RECOGNIZE_SPEECH
-            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-        }
-        speechRecognizer.startListening(intent)
-    }
-
-    // Speak a response to the user
-    private fun speak(text: String) {
-        textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
+        // Initialize DataClient to interact with Wearable API for fetching data
+        dataClient = Wearable.getDataClient(this)
     }
 
     @Composable
-    fun WearUI() {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = "Jarvis AI Life Coach", modifier = Modifier.padding(bottom = 16.dp))
-            Button(onClick = { startListening() }) {
-                Text(text = "Speak to Jarvis")
-            }
-            Button(onClick = { speak("Hello! How can I assist you today?") }) {
-                Text(text = "Test Speak")
+    fun WatchFaceUI() {
+        // Main content for the watch UI layout
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .wrapContentHeight(Alignment.CenterVertically),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Jarvis AI Life Coach",
+                    style = MaterialTheme.typography.h5,
+                    color = Color.White
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = "Health Data: ${fetchHealthData()}",
+                    style = MaterialTheme.typography.body1,
+                    color = Color.Green
+                )
             }
         }
     }
+
+    // Function to simulate fetching health data or any necessary data for the watch activity
+    private suspend fun fetchHealthData(): String {
+        try {
+            // Fetch health data from the wearable device
+            val dataItem = dataClient.getDataItems(android.net.Uri.parse("wearable://path/to/data")).await()
+            if (dataItem.isNotEmpty()) {
+                val dataMapItem = DataMapItem.fromDataItem(dataItem[0])
+                val dataMap: DataMap = dataMapItem.dataMap
+                val heartRate = dataMap.getString("heart_rate") ?: "No data"
+                return heartRate
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return "Fetching data failed"
+    }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
-fun WearUIPreview() {
-    WearUI()
+fun DefaultPreview() {
+    JarvisAITheme {
+        WatchFaceUI()
+    }
 }
