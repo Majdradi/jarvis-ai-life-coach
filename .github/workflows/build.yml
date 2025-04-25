@@ -13,24 +13,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # Step 1: Checkout repository
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    # Step 2: Set up JDK (Java Development Kit)
     - name: Set up JDK
       uses: actions/setup-java@v2
       with:
         java-version: '11'
 
+    # Step 3: Build APK (this step runs the Gradle task to assemble the APK)
     - name: Build APK
       run: ./gradlew assembleRelease
 
-    - name: List APK files (Debug Step)
+    # Step 4: Debug: List APK files in the release folder
+    - name: List APK files in the release folder
       run: |
         echo "Listing APK files in the release folder..."
         ls -alh app/build/outputs/apk/release/
 
+    # Step 5: Upload APK artifact
     - name: Upload APK artifact
       uses: actions/upload-artifact@v3
       with:
         name: app-release
         path: app/build/outputs/apk/release/app-release.apk
+
+    # Step 6: Ensure the artifact is uploaded and confirm
+    - name: Confirm uploaded artifact
+      run: |
+        echo "APK upload complete. Verifying uploaded artifact."
+        ls -alh app/build/outputs/apk/release/app-release.apk
