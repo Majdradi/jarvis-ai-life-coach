@@ -24,7 +24,7 @@ jobs:
           java-version: '11'  # Specify Java version here (e.g., '11', '8', etc.)
           distribution: 'temurin'  # Use the temurin distribution (AdoptOpenJDK has been renamed)
 
-      # Install Android SDK
+      # Install Android SDK and required build tools
       - name: Install Android SDK
         run: |
           sudo apt update
@@ -32,9 +32,15 @@ jobs:
           echo "y" | sdkmanager --licenses
           sdkmanager "platform-tools" "build-tools;30.0.3" "android-30"
 
-      # Check Gradle version (helpful for debugging)
+      # Verify Gradle version (helpful for debugging)
       - name: Check Gradle version
         run: ./gradlew --version
+
+      # Ensure gradlew file exists and is executable
+      - name: Check gradlew file
+        run: |
+          ls -l ./gradlew  # Ensure gradlew is present
+          chmod +x ./gradlew  # Ensure it's executable
 
       # Cache Gradle dependencies (optional but speeds up future builds)
       - name: Cache Gradle dependencies
@@ -45,13 +51,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      # Print directory contents (to check if gradlew is available)
-      - name: List directory contents
-        run: ls -l
-
-      # Build the APK
+      # Build the APK using gradlew and print detailed logs with --stacktrace
       - name: Build APK
-        run: ./gradlew assembleRelease  # Use assembleRelease to build the release APK
+        run: ./gradlew assembleRelease --stacktrace  # Print detailed logs for debugging
 
       # Upload APK artifact
       - name: Upload APK artifact
