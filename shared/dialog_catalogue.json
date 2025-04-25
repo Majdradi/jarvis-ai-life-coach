@@ -1,0 +1,16 @@
+{
+  "greeting": {
+    "text": "Hello, welcome to Jarvis AI Life Coach!",
+    "responses": [
+      "Hi, how can I assist you today?",
+      "Hello, I’m here to help you."
+    ]
+  },
+  "goodbye": {
+    "text": "Goodbye! Have a great day!",
+    "responses": [
+      "Take care, see you soon!",
+      "Goodbye, and feel free to reach out anytime!"
+    ]
+  }
+}
