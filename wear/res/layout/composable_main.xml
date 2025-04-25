@@ -1,0 +1,39 @@
+package com.example.jarviswatchface
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.wear.widget.BoxInsetLayout
+import com.google.android.material.composethemeadapter.MdcTheme
+import androidx.wear.tiles.material.Text
+import androidx.wear.tiles.material.Button
+import android.content.Intent
+import com.example.jarvisai_life_coach.R
+
+class JarvisWatchActivity : ComponentActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContent {
+            MdcTheme {
+                BoxInsetLayout {
+                    // Your UI components like time, notifications, or health-related data can go here
+                    Text("Welcome to Jarvis AI Life Coach")
+
+                    // Button to navigate to other parts of the app, such as health metrics or AI suggestions
+                    Button(
+                        onClick = {
+                            val intent = Intent(this@JarvisWatchActivity, HealthMetricsActivity::class.java)
+                            startActivity(intent)
+                        }
+                    ) {
+                        Text("View Health Metrics")
+                    }
+
+                    // You can add more buttons or components for other features like AI coaching or reminders
+                }
+            }
+        }
+    }
+}
