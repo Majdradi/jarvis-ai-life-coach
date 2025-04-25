@@ -1,0 +1,10 @@
+{
+  "greetings": {
+    "response1": "Hello! How can I assist you today?",
+    "response2": "Hi there! What can I help you with?"
+  },
+  "fallback": {
+    "response1": "Sorry, I didn’t quite catch that.",
+    "response2": "Could you please repeat that?"
+  }
+}
