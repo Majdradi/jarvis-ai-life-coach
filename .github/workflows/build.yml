@@ -15,15 +15,15 @@ jobs:
     steps:
     # Step 1: Checkout repository
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4  # Updated to v4
 
     # Step 2: Set up JDK (Java Development Kit)
     - name: Set up JDK
       uses: actions/setup-java@v2
       with:
-        java-version: '11'  # Set this to the JDK version your project requires
+        java-version: '11'  # Adjust to your required JDK version
 
-    # Step 3: Build APK (this step runs the Gradle task to assemble the APK)
+    # Step 3: Build APK
     - name: Build APK
       run: ./gradlew assembleRelease
 
@@ -33,9 +33,9 @@ jobs:
         echo "Listing APK files in the release folder..."
         ls -alh app/build/outputs/apk/release/
 
-    # Step 5: Upload APK artifact
+    # Step 5: Upload APK artifact (Updated to v4)
     - name: Upload APK artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4  # Updated to v4
       with:
         name: app-release
         path: app/build/outputs/apk/release/app-release.apk
