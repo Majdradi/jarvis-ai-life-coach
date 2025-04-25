@@ -22,7 +22,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'  # Specify Java version here (e.g., '11', '8', etc.)
-          distribution: 'adoptopenjdk'  # Use the AdoptOpenJDK distribution
+          distribution: 'temurin'  # Use the temurin distribution (AdoptOpenJDK has been renamed)
 
       # Install Android SDK
       - name: Install Android SDK
