@@ -1,18 +1,16 @@
 package com.jarvis.ai.wear
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import com.jarvis.ai.theme.JarvisAITheme
-import com.jarvis.ai.wear.ui.JarvisWatchUI
+import androidx.appcompat.app.AppCompatActivity
 
-class JarvisWatchActivity : ComponentActivity() {
+class JarvisWatchActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            JarvisAITheme {
-                JarvisWatchUI()
-            }
-        }
+        setContentView(R.layout.activity_watch)
+
+        // Initialization and setup for wear activity goes here
     }
+
+    // Implement WearOS-specific functionality as required
 }
