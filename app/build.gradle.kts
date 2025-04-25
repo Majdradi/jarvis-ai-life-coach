@@ -4,14 +4,15 @@ plugins {
 }
 
 android {
-    compileSdkVersion(30)
+    compileSdkVersion 30
     defaultConfig {
         applicationId = "com.jarvis.ai"
-        minSdkVersion(23)
-        targetSdkVersion(30)
+        minSdkVersion 23
+        targetSdkVersion 30
         versionCode = 1
         versionName = "1.0"
     }
+
     buildTypes {
         release {
             minifyEnabled = false
@@ -29,4 +30,3 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview:1.0.0")
     debugImplementation("androidx.compose.ui:ui-tooling:1.0.0")
 }
-
