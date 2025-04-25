@@ -39,6 +39,7 @@ jobs:
       with:
         name: app-release
         path: app/build/outputs/apk/release/app-release.apk
+        retention-days: 30  # Optional: Sets retention for the uploaded artifact (30 days in this case)
 
     # Step 6: Ensure the artifact is uploaded and confirm
     - name: Confirm uploaded artifact
