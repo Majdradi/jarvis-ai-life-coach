@@ -1,18 +1,16 @@
-package com.jarvis.ai
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import com.jarvis.ai.ui.MainUI
-import com.jarvis.ai.theme.JarvisAITheme
-
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            JarvisAITheme {
-                MainUI()
-            }
-        }
-    }
-}
+    <TextView
+        android:id="@+id/helloTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello, Jarvis AI!"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp" />
+    
+</LinearLayout>
