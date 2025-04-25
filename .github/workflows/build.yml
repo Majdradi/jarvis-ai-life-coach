@@ -38,7 +38,7 @@ jobs:
 
       # Cache Gradle dependencies (optional but speeds up future builds)
       - name: Cache Gradle dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
@@ -55,7 +55,7 @@ jobs:
 
       # Upload APK artifact
       - name: Upload APK artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: app-release
           path: app/build/outputs/apk/release/app-release.apk  # Path to the generated APK
