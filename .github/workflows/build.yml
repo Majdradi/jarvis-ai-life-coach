@@ -17,13 +17,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Set up JDK 11 (or your desired JDK version)
+      # Step 2: Set up JDK 11
       - name: Set up JDK 11
         uses: actions/setup-java@v2
         with:
-          java-version: '11'
+          java-version: '11'  # Specify Java version here (e.g., '11', '8', etc.)
+          distribution: 'adoptopenjdk'  # Use the AdoptOpenJDK distribution, can also use 'zulu' or others
 
-      # Cache Gradle dependencies
+      # Cache Gradle dependencies (optional but speeds up future builds)
       - name: Cache Gradle dependencies
         uses: actions/cache@v2
         with:
@@ -32,11 +33,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      # Build the APK
+      # Build the APK (this command will build your APK)
       - name: Build APK
         run: ./gradlew assembleRelease  # Use assembleRelease to build the release APK
 
-      # Upload the APK as an artifact
+      # Upload APK artifact
       - name: Upload APK artifact
         uses: actions/upload-artifact@v2
         with:
