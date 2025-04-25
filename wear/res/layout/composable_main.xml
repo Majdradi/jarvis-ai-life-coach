@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.compose.ui.tooling.preview.Preview
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    
-    <!-- Simple UI elements like buttons or text labels -->
-    <androidx.compose.foundation.layout.Column
-        android:modifier="fillMaxWidth()">
-        
-        <androidx.compose.material3.Text text="Jarvis AI Life Coach" />
-        <androidx.compose.material3.Button text="Speak to Jarvis" />
-    </androidx.compose.foundation.layout.Column>
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
 
-</androidx.compose.ui.tooling.preview.Preview>
+    <TextView
+        android:id="@+id/watchHelloTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello, Jarvis Watch!"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp" />
+    
+</LinearLayout>
